@@ -41,6 +41,7 @@ const PORT = process.env.PORT || 3001;
 const URI =
   "mongodb+srv://sarthakgupta1433:S4rthak2002@semester3-fullstack.sdble.mongodb.net/";
      
+  
 // Connecting to MongoDB and starting the server.
 mongoose
   .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })

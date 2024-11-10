@@ -1,6 +1,18 @@
 # Mutation for adding a new employee
 type Mutation {
   createEmployee(input: EmployeeInput!): Employee
+  updateEmployee(id: ID!, input: UpdateEmployeeInput!): Employee
+  deleteEmployee(id: ID!): Message
+}
+
+type Message {
+  message: String
+}
+
+input UpdateEmployeeInput {
+  title: String
+  department: String
+  currentStatus: Boolean
 }
 
 # Input type for creating an employee, specifying required fields
@@ -29,5 +41,6 @@ type Employee {
  
 # Query to retrieve all employees
 type Query {
-  getEmployees: [Employee]
+  getEmployees(type: String): [Employee]
+  employee(id: ID!): Employee
 }
