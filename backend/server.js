@@ -11,6 +11,7 @@ const resolvers = require('./resolvers/resolvers');
 // Initializing the Express application
 const app = express();
 
+
 // Enabling CORS to allow requests from different origins.
 app.use(cors());
  
