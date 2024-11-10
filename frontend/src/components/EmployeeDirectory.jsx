@@ -1,30 +1,26 @@
 import React from 'react';
+// Importing other components.
 import EmployeeSearch from './EmployeeSearch';
 import EmployeeCreate from './EmployeeCreate';
 import EmployeeTable from './EmployeeTable';
-import 'bootstrap/dist/css/bootstrap.min.css';
- 
+// Importing CSS of Employee Directory.
+import '../style/EmployeeDirectory.css';
+
+
 function EmployeeDirectory() {
   return (
-    <div>
-      {/* Banner with bg-info for the welcome text */}
-      <div className="bg-info text-white text-center py-4 mb-4">
+    <div className="directory-container">
+      {/* Basic Welcome Text. */}
+      <div className="banner">
         <h1>Employee Management System</h1>
       </div>
- 
-      {/* Employee Search component */}
-      <div className="container">
+
+      {/* Employee Search, Create, and Table components */}
+      <div className="content-container">
         <EmployeeSearch />
-        <div className="row mt-3">
-          {/* Employee Create form on the left side */}
-          <div className="col-md-6 col-sm-12 mb-4">
-            <EmployeeCreate />
-          </div>
- 
-          {/* Employee Table on the right side */}
-          <div className="col-md-6 col-sm-12">
-            <EmployeeTable />
-          </div>
+        <div className="employee-section">
+          <EmployeeCreate />
+          <EmployeeTable />
         </div>
       </div>
     </div>
