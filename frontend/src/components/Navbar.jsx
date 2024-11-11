@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+// Importing CSS for the Navbar Component
 import "../style/Navbar.css"; 
 
+// Creating a Navbar with two links and adding a title name which brings to home page when clicked.
 const Navbar = () => (
   <nav className="navbar">
     <div className="navbar-container">

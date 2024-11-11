@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
+// Importing Styles for Employee Table
 import "../style/EmployeeTable.css"; 
 
+// This below contains all the data that will be displayed on the home page.
 const EmployeeTable = ({ getEmployees = [] }) => {
   return (
     <div className="employee-table-container">
@@ -25,10 +28,12 @@ const EmployeeTable = ({ getEmployees = [] }) => {
             {getEmployees.length === 0 ? (
               <tr>
                 <td colSpan="9" className="no-records">
+                  {/* If no data is found, it will display no employees found. */}
                   No employees found.
                 </td>
               </tr>
-            ) : (
+            ) : (              
+              // Iterating over the `getEmployees` array to dynamically generate a table row for each employee
               getEmployees.map((employee) => (
                 <tr key={employee.id}>
                   <td>{employee.FirstName}</td>
@@ -42,6 +47,7 @@ const EmployeeTable = ({ getEmployees = [] }) => {
                   <td>{employee.EmployeeType}</td>
                   <td>{employee.CurrentStatus ? "Working" : "Retired"}</td>
                   <td>
+                    {/* Providing a link to the employee's details page */}
                     <Link to={`/employee/${employee.id}`} className="details-link">
                       Details
                     </Link>

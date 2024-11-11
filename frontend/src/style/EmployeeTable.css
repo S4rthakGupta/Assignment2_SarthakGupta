@@ -1,4 +1,4 @@
-/* Container styling */
+/* This below is the styling for EmployeeTable component */
 .employee-table-container {
   max-width: 1200px;
   width: 100%;
@@ -10,7 +10,6 @@
   color: #333333;
 }
 
-/* Title styling */
 .employee-table-container h2 {
   text-align: center;
   font-size: 1.6rem;
@@ -18,26 +17,22 @@
   margin-bottom: 20px;
 }
 
-/* No records message styling */
 .no-records {
   text-align: center;
   font-size: 1rem;
   color: #777777;
 }
 
-/* Wrapper for table overflow */
 .table-wrapper {
   overflow-x: auto;
 }
 
-/* Table styling */
 .employee-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 800px; /* Ensures table layout on small screens */
+  min-width: 800px; 
 }
 
-/* Header and cell styling */
 .employee-table th,
 .employee-table td {
   padding: 12px;
@@ -52,17 +47,14 @@
   color: #333333;
 }
 
-/* Zebra stripes for rows */
 .employee-table tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-/* Row hover effect */
 .employee-table tr:hover {
   background-color: #f1f1f1;
 }
 
-/* Link styling */
 .details-link {
   color: #007bff;
   text-decoration: none;
@@ -74,7 +66,6 @@
   color: #0056b3;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
   .employee-table-container {
     padding: 10px;

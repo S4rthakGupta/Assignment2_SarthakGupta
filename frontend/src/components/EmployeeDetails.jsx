@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+
 // Importing the CSS file from the style folder.
 import "../style/EmployeeDetails.css";
 
+// This below component is to manage EmployeeDirectory.
 const EmployeeDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -15,6 +17,8 @@ const EmployeeDetails = () => {
     CurrentStatus: true,
   });
 
+  
+  // This below hook will fetch employee details when the component mounts or when id changes
   React.useEffect(() => {
     fetch('http://localhost:3001/graphql', {
       method: 'POST',
@@ -54,7 +58,8 @@ const EmployeeDetails = () => {
       [name]: name === 'CurrentStatus' ? value === 'true' : value,
     });
   };
-
+  
+  // This below code will enable editing mode and pre-fill the form with existing employee data
   const handleEdit = () => {
     setIsEditing(true);
     setFormData({
@@ -63,7 +68,8 @@ const EmployeeDetails = () => {
       CurrentStatus: employee.CurrentStatus,
     });
   };
-
+  
+  // This code will save updated employee data by sending a GraphQL mutation
   const handleSave = () => {
     fetch('http://localhost:3001/graphql', {
       method: 'POST',
@@ -94,6 +100,8 @@ const EmployeeDetails = () => {
       });
   };
 
+  
+  // This below code will handle the deleted employee request by sending a GraphQL mutation
   const handleDelete = () => {
     fetch('http://localhost:3001/graphql', {
       method: 'POST',
@@ -114,13 +122,14 @@ const EmployeeDetails = () => {
       .then((res) => res.json())
       .then(() => {
         setShowDeleteModal(false);
-        navigate('/'); // Redirect after deletion
+        navigate('/');
       })
       .catch((error) => {
         console.error('Error deleting employee:', error);
       });
   };
-
+  
+  // This below code will display a loading indicator if the employee data has not yet been fetched
   if (!employee) {
     return (
       <div className="loading-container">
@@ -129,7 +138,8 @@ const EmployeeDetails = () => {
       </div>
     );
   }
-
+  
+  // This below is the main container for the Employee Details component
   return (
     <div className="employee-details-container">
       <div className="card">
@@ -202,6 +212,7 @@ const EmployeeDetails = () => {
         </div>
       </div>
 
+      {/* Delete confirmation modal (UI element) */}
       {showDeleteModal && (
         <div className="modal">
           <div className="modal-content">

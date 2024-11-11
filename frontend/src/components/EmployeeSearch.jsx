@@ -1,21 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "../style/EmployeeSearch.css"; // Import custom CSS for styling
+
+// Importing CSS for the filter (EmployeeSearch)
+import "../style/EmployeeSearch.css"; 
+
+// Import UI Icon from font awesome to add it in the input field of search.
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons"; //
 
-
+// EmployeeSearch component to filter employees based on their type.
 const EmployeeSearch = ({ setEmployees }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [selectedType, setSelectedType] = useState("");
-
+  
+  // Extracting the "type" query parameter from the URL
   const type = new URLSearchParams(location.search).get("type") || "";
-
+  
+  // This below hook is synchronizing the selectedType state with the "type" query parameter
   useEffect(() => {
     setSelectedType(type);
   }, [type]);
 
+  
+  // Fetching employee data based on the selected type whenever the "type" changes
   useEffect(() => {
     fetch("http://localhost:3001/graphql", {
       method: "POST",
@@ -46,7 +54,8 @@ const EmployeeSearch = ({ setEmployees }) => {
         if (data.errors) {
           console.error("GraphQL Error:", data.errors);
           setEmployees([]);
-        } else {
+        } else {          
+          // Updating the employee list with the fetched data
           setEmployees(data.data.getEmployees || []);
         }
       })
@@ -56,16 +65,20 @@ const EmployeeSearch = ({ setEmployees }) => {
       });
   }, [type, setEmployees]);
 
+  
+  // Handler for dropdown selection change
   const handleTypeChange = (event) => {
     const newType = event.target.value;
     setSelectedType(newType);
     navigate(`?type=${newType}`);
   };
 
-  return (
+  return (    
+    // Container for the search/filter UI
     <div className="employee-search-container">
       <h2>Filter Employees</h2>
       <div className="dropdown-wrapper">
+        {/* Using icon in the search bar. */}
         <FontAwesomeIcon icon={faSearch} className="search-icon" />
         <select
           value={selectedType}
