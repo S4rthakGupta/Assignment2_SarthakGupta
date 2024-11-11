@@ -1,14 +1,18 @@
 # Mutation for adding a new employee
 type Mutation {
   createEmployee(input: EmployeeInput!): Employee
+  
+  #new
   updateEmployee(id: ID!, input: UpdateEmployeeInput!): Employee
   deleteEmployee(id: ID!): Message
 }
 
+#new
 type Message {
   message: String
 }
 
+#new
 input UpdateEmployeeInput {
   title: String
   department: String
@@ -41,6 +45,7 @@ type Employee {
  
 # Query to retrieve all employees
 type Query {
+#new
   getEmployees(type: String): [Employee]
   employee(id: ID!): Employee
 }

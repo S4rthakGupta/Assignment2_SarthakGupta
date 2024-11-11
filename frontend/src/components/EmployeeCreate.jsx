@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-// Importing CSS from Employee Create.
-import "../style/EmployeeCreate.css";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import "../style/EmployeeCreate.css"; // Import custom CSS for styling
 
 function EmployeeCreate() {
   const [employeeData, setEmployeeData] = useState({
-    // State to manage form input data for new employee.
     FirstName: "",
     LastName: "",
     Age: "",
@@ -14,11 +13,10 @@ function EmployeeCreate() {
     EmployeeType: "FullTime",
   });
 
-  // State to manage validation error messages
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({}); // State to hold validation errors
+  const navigate = useNavigate(); // Initialize navigate hook
 
-  // Handle input changes, update employeeData state.
-  const onInput = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEmployeeData({
       ...employeeData,
@@ -26,34 +24,30 @@ function EmployeeCreate() {
     });
   };
 
-  // Basic validation function to check input fields.
   const validateForm = () => {
     const newErrors = {};
 
-    // Validation rules for each input field.
-    if (!employeeData.FirstName)
-      newErrors.FirstName = "Please enter First Name";
-    if (!employeeData.LastName) newErrors.LastName = "Please enter Last Name";
+    // Validation rules
+    if (!employeeData.FirstName) newErrors.FirstName = "First Name is required";
+    if (!employeeData.LastName) newErrors.LastName = "Last Name is required";
     if (employeeData.Age < 20 || employeeData.Age > 70)
       newErrors.Age = "Age must be between 20 and 70";
     if (!employeeData.DateOfJoining)
-      newErrors.DateOfJoining = "Please enter the Date of Joining";
+      newErrors.DateOfJoining = "Date of Joining is required";
 
     setErrors(newErrors);
 
-    // Return true if no validation errors, false otherwise.
+    // Form is valid if there are no errors
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle form submission with validation and API call
-  const onSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) {
       return;
     }
 
-    // Send data to GraphQL server for new employee creation.
     const response = await fetch("http://localhost:3001/graphql", {
       method: "POST",
       headers: {
@@ -84,18 +78,16 @@ function EmployeeCreate() {
       alert(
         "Employee has been created successfully and is registered in the DB."
       );
-      // Refresh page after successful submission.
-      window.location.reload();
+      navigate("/"); // Navigate to the home page after success
     }
   };
 
   return (
     <div className="employee-create-container">
       <h2 className="employee-create-title">
-        {" "}
         <i className="fas fa-user-plus"></i> Create New Employee
       </h2>
-      <form onSubmit={onSubmit} className="employee-form">
+      <form onSubmit={handleSubmit} className="employee-form">
         <div className="employee-form-row">
           <div className="employee-form-group">
             <label className="employee-label">First Name</label>
@@ -105,8 +97,8 @@ function EmployeeCreate() {
               className={`employee-input ${
                 errors.FirstName ? "employee-input-error" : ""
               }`}
-              placeholder="Enter your First Name"
-              onChange={onInput}
+              placeholder="Enter First Name"
+              onChange={handleInputChange}
             />
             {errors.FirstName && (
               <div className="employee-error">{errors.FirstName}</div>
@@ -120,8 +112,8 @@ function EmployeeCreate() {
               className={`employee-input ${
                 errors.LastName ? "employee-input-error" : ""
               }`}
-              placeholder="Enter your Last Name"
-              onChange={onInput}
+              placeholder="Enter Last Name"
+              onChange={handleInputChange}
             />
             {errors.LastName && (
               <div className="employee-error">{errors.LastName}</div>
@@ -138,10 +130,10 @@ function EmployeeCreate() {
               className={`employee-input ${
                 errors.Age ? "employee-input-error" : ""
               }`}
-              placeholder="Enter your Age (20-70)"
+              placeholder="Enter Age (20-70)"
               min="20"
               max="70"
-              onChange={onInput}
+              onChange={handleInputChange}
             />
             {errors.Age && <div className="employee-error">{errors.Age}</div>}
           </div>
@@ -153,7 +145,7 @@ function EmployeeCreate() {
               className={`employee-input ${
                 errors.DateOfJoining ? "employee-input-error" : ""
               }`}
-              onChange={onInput}
+              onChange={handleInputChange}
             />
             {errors.DateOfJoining && (
               <div className="employee-error">{errors.DateOfJoining}</div>
@@ -164,7 +156,12 @@ function EmployeeCreate() {
         <div className="employee-form-row">
           <div className="employee-form-group">
             <label className="employee-label">Title</label>
-            <select name="Title" className="employee-select" onChange={onInput}>
+            <select
+              name="Title"
+              className="employee-select"
+              onChange={handleInputChange}
+              value={employeeData.Title}
+            >
               <option value="Employee">Employee</option>
               <option value="Manager">Manager</option>
               <option value="Director">Director</option>
@@ -176,7 +173,8 @@ function EmployeeCreate() {
             <select
               name="Department"
               className="employee-select"
-              onChange={onInput}
+              onChange={handleInputChange}
+              value={employeeData.Department}
             >
               <option value="IT">IT</option>
               <option value="Marketing">Marketing</option>
@@ -189,7 +187,8 @@ function EmployeeCreate() {
             <select
               name="EmployeeType"
               className="employee-select"
-              onChange={onInput}
+              onChange={handleInputChange}
+              value={employeeData.EmployeeType}
             >
               <option value="FullTime">Full Time</option>
               <option value="PartTime">Part Time</option>

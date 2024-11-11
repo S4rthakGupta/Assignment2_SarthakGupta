@@ -15,6 +15,7 @@ const resolvers = {
         throw new Error("Failed to fetch employees");
       }
     },
+    // new
     employee: async (_, { id }) => {
       try {
         return await EmployeeModel.findById(id);
@@ -41,6 +42,8 @@ const resolvers = {
         throw new Error("Failed to create an employee");
       }
     },
+
+    // new
     updateEmployee: async (_, { id, input }) => {
       const updates = {};
       if (input.title) updates.title = input.title;
