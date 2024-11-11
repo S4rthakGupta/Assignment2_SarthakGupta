@@ -1,11 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link for navigation
+import React from "react";
+import { Link } from "react-router-dom";
 
-const EmployeeTable = ({ employees }) => {
+const EmployeeTable = ({ employees = [] }) => {
   return (
-    <div className="table-responsive">
-      <table className="table table-striped table-bordered mt-4">
-        <thead className="thead-dark">
+    <div className="table-container">
+      <table>
+        <thead>
           <tr>
             <th>First Name</th>
             <th>Last Name</th>
@@ -13,7 +13,7 @@ const EmployeeTable = ({ employees }) => {
             <th>Date of Joining</th>
             <th>Title</th>
             <th>Department</th>
-            <th>Employee Type</th>
+            <th>Type</th>
             <th>Status</th>
             <th>Details</th>
           </tr>
@@ -21,26 +21,23 @@ const EmployeeTable = ({ employees }) => {
         <tbody>
           {employees.length === 0 ? (
             <tr>
-              <td colSpan="9" className="text-center">
-                No employees found
+              <td colSpan="9" className="no-data">
+                No employees found.
               </td>
             </tr>
           ) : (
             employees.map((employee) => (
               <tr key={employee.id}>
-                <td>{employee.firstName}</td>
-                <td>{employee.lastName}</td>
-                <td>{employee.age}</td>
-                <td>{new Date(employee.dateOfJoining).toLocaleDateString()}</td>
-                <td>{employee.title}</td>
-                <td>{employee.department}</td>
-                <td>{employee.employeeType}</td>
-                <td>{employee.currentStatus ? 'Working' : 'Retired'}</td>
+                <td>{employee.FirstName}</td>
+                <td>{employee.LastName}</td>
+                <td>{employee.Age}</td>
+                <td>{new Date(employee.DateOfJoining).toLocaleDateString()}</td>
+                <td>{employee.Title}</td>
+                <td>{employee.Department}</td>
+                <td>{employee.EmployeeType}</td>
+                <td>{employee.CurrentStatus ? "Working" : "Retired"}</td>
                 <td>
-                  <Link
-                    to={`/employee/${employee.id}`}
-                    className="btn btn-primary btn-sm"
-                  >
+                  <Link to={`/employee/${employee.id}`} className="details-link">
                     Details
                   </Link>
                 </td>

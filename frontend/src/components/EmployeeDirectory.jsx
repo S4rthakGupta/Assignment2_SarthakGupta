@@ -1,36 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from "react";
+import EmployeeSearch from "./EmployeeSearch";
+import EmployeeCreate from "./EmployeeCreate";
+import EmployeeTable from "./EmployeeTable";
 
-// Importing other components.
-import EmployeeSearch from './EmployeeSearch';
-import EmployeeCreate from './EmployeeCreate';
-import EmployeeTable from './EmployeeTable';
-
-
-
-function EmployeeDirectory() {
-
-  const [employees, setEmployees] = useState([]);
+const EmployeeDirectory = () => {
+  const [employees, setEmployees] = useState([]); // Store employee data
 
   return (
     <div className="directory-container">
-      {/* Basic Welcome Text. */}
-      <div className="banner">
+      <header>
         <h1>Employee Management System</h1>
-        <EmployeeSearch setEmployees={setEmployees} />
-        <EmployeeTable employees={employees} />
-      </div>
+      </header>
 
-      {/* Employee Search, Create, and Table components */}
-      <div className="content-container">
-        <EmployeeSearch />
-        <div className="employee-section">
-          <EmployeeCreate />
-          <EmployeeTable />
-        </div>
+      {/* Employee Search Component */}
+      <EmployeeSearch setEmployees={setEmployees} />
+
+      {/* Employee Table and Create */}
+      <div className="employee-section">
+        <EmployeeTable employees={employees} />
+        <EmployeeCreate />
       </div>
     </div>
   );
-}
+};
 
 export default EmployeeDirectory;
-
