@@ -1,2 +1,2 @@
-# Assignment1_SarthakGupta
-This is my Assignment1 of Advanced Full-Stack Course
+# Assignment2_SarthakGupta
+This is my Assignment2 of Advanced Full-Stack Course
