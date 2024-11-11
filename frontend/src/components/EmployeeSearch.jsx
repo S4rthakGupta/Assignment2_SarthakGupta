@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import "../style/EmployeeSearch.css"; // Import custom CSS for styling
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons"; //
+
 
 const EmployeeSearch = ({ setEmployees }) => {
   const location = useLocation();
-  const navigate = useNavigate(); // To programmatically change the URL
+  const navigate = useNavigate();
   const [selectedType, setSelectedType] = useState("");
 
-  // Extract the "type" query parameter from the URL
   const type = new URLSearchParams(location.search).get("type") || "";
 
-  // Update the selected dropdown value when the query parameter changes
   useEffect(() => {
     setSelectedType(type);
   }, [type]);
 
-  // Fetch employees when "type" changes
   useEffect(() => {
     fetch("http://localhost:3001/graphql", {
       method: "POST",
@@ -55,27 +56,28 @@ const EmployeeSearch = ({ setEmployees }) => {
       });
   }, [type, setEmployees]);
 
-  // Handle dropdown change and update the query parameter
   const handleTypeChange = (event) => {
     const newType = event.target.value;
     setSelectedType(newType);
-    navigate(`?type=${newType}`); // Update the URL without reloading
+    navigate(`?type=${newType}`);
   };
 
   return (
-    <div className="mb-4">
+    <div className="employee-search-container">
       <h2>Filter Employees</h2>
-      <select
-        value={selectedType}
-        onChange={handleTypeChange}
-        className="form-select w-50 mx-auto"
-      >
-        <option value="">All</option>
-        <option value="FullTime">Full-Time</option>
-        <option value="PartTime">Part-Time</option>
-        <option value="Contract">Contract</option>
-        <option value="Seasonal">Seasonal</option>
-      </select>
+      <div className="dropdown-wrapper">
+        <FontAwesomeIcon icon={faSearch} className="search-icon" />
+        <select
+          value={selectedType}
+          onChange={handleTypeChange}
+        >
+          <option value="">All</option>
+          <option value="FullTime">Full-Time</option>
+          <option value="PartTime">Part-Time</option>
+          <option value="Contract">Contract</option>
+          <option value="Seasonal">Seasonal</option>
+        </select>
+      </div>
     </div>
   );
 };

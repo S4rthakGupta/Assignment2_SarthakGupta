@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-import "../style/EmployeeCreate.css"; // Import custom CSS for styling
+import { useNavigate } from "react-router-dom"; 
 
+// Importing CSS
+import "../style/EmployeeCreate.css"; 
+
+// This below is a function which create and store the employee's data.
 function EmployeeCreate() {
   const [employeeData, setEmployeeData] = useState({
     FirstName: "",
@@ -13,21 +16,27 @@ function EmployeeCreate() {
     EmployeeType: "FullTime",
   });
 
-  const [errors, setErrors] = useState({}); // State to hold validation errors
-  const navigate = useNavigate(); // Initialize navigate hook
+  // This below line will store validation errors.
+  const [errors, setErrors] = useState({}); 
 
+  // This is used for navigation after the form is submitted.
+  const navigate = useNavigate();
+
+
+  // This below line will update state when an input value changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEmployeeData({
       ...employeeData,
+      // This below line converts age to number
       [name]: name === "Age" ? parseInt(value, 10) : value,
     });
   };
 
+  // Validate form inputs
   const validateForm = () => {
     const newErrors = {};
 
-    // Validation rules
     if (!employeeData.FirstName) newErrors.FirstName = "First Name is required";
     if (!employeeData.LastName) newErrors.LastName = "Last Name is required";
     if (employeeData.Age < 20 || employeeData.Age > 70)
@@ -37,7 +46,7 @@ function EmployeeCreate() {
 
     setErrors(newErrors);
 
-    // Form is valid if there are no errors
+    // Return true if there are no errors
     return Object.keys(newErrors).length === 0;
   };
 
@@ -47,7 +56,8 @@ function EmployeeCreate() {
     if (!validateForm()) {
       return;
     }
-
+    
+    // This below code will send data to the server via a GraphQL mutation
     const response = await fetch("http://localhost:3001/graphql", {
       method: "POST",
       headers: {
@@ -78,10 +88,11 @@ function EmployeeCreate() {
       alert(
         "Employee has been created successfully and is registered in the DB."
       );
-      navigate("/"); // Navigate to the home page after success
+      navigate("/"); 
     }
   };
 
+  // Main UI and code starts from here.
   return (
     <div className="employee-create-container">
       <h2 className="employee-create-title">
