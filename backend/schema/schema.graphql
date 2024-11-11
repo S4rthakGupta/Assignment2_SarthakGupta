@@ -14,9 +14,9 @@ type Message {
 
 #new
 input UpdateEmployeeInput {
-  title: String
-  department: String
-  currentStatus: Boolean
+  Title: String
+  Department: String
+  CurrentStatus: Boolean
 }
 
 # Input type for creating an employee, specifying required fields

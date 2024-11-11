@@ -16,7 +16,7 @@ const EmployeeSearch = ({ setEmployees }) => {
 
   // Fetch employees when "type" changes
   useEffect(() => {
-    fetch("http://localhost:5000/graphql", {
+    fetch("http://localhost:3001/graphql", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +46,7 @@ const EmployeeSearch = ({ setEmployees }) => {
           console.error("GraphQL Error:", data.errors);
           setEmployees([]);
         } else {
-          setEmployees(data.data.employees || []);
+          setEmployees(data.data.getEmployees || []);
         }
       })
       .catch((err) => {

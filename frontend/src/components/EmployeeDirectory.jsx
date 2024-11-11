@@ -4,7 +4,7 @@ import EmployeeCreate from "./EmployeeCreate";
 import EmployeeTable from "./EmployeeTable";
 
 const EmployeeDirectory = () => {
-  const [employees, setEmployees] = useState([]); // Store employee data
+  const [getEmployees, setEmployees] = useState([]); // Store employee data
 
   return (
     <div className="directory-container">
@@ -17,7 +17,7 @@ const EmployeeDirectory = () => {
 
       {/* Employee Table and Create */}
       <div className="employee-section">
-        <EmployeeTable employees={employees} />
+        <EmployeeTable getEmployees={getEmployees} />
         <EmployeeCreate />
       </div>
     </div>

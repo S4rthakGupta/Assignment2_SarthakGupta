@@ -9,9 +9,9 @@ const EmployeeDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [formData, setFormData] = useState({
-    title: '',
-    department: '',
-    currentStatus: true,
+    Title: '',
+    Department: '',
+    CurrentStatus: true,
   });
 
   React.useEffect(() => {
@@ -25,14 +25,14 @@ const EmployeeDetails = () => {
           query getEmployees($id: ID!) {
             employee(id: $id) {
               id
-              firstName
-              lastName
-              age
-              dateOfJoining
-              title
-              department
-              employeeType
-              currentStatus
+              FirstName
+              LastName
+              Age
+              DateOfJoining
+              Title
+              Department
+              EmployeeType
+              CurrentStatus
             }
           }
         `,
@@ -40,23 +40,26 @@ const EmployeeDetails = () => {
       }),
     })
       .then((res) => res.json())
-      .then((data) => setEmployee(data.data.employee));
+      .then((data) => setEmployee(data.data.employee))
+      .catch((error) => {
+        console.error('Error fetching employee:', error);
+      });
   }, [id]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: name === 'currentStatus' ? value === 'true' : value,
+      [name]: name === 'CurrentStatus' ? value === 'true' : value,
     });
   };
 
   const handleEdit = () => {
     setIsEditing(true);
     setFormData({
-      title: employee.title,
-      department: employee.department,
-      currentStatus: employee.currentStatus,
+      Title: employee.Title,
+      Department: employee.Department,
+      CurrentStatus: employee.CurrentStatus,
     });
   };
 
@@ -68,12 +71,12 @@ const EmployeeDetails = () => {
       },
       body: JSON.stringify({
         query: `
-          mutation UpdateEmployee($id: ID!, $input: UpdateEmployeeInput!) {
+          mutation updateEmployee($id: ID!, $input: UpdateEmployeeInput!) {
             updateEmployee(id: $id, input: $input) {
               id
-              title
-              department
-              currentStatus
+              Title
+              Department
+              CurrentStatus
             }
           }
         `,
@@ -84,6 +87,9 @@ const EmployeeDetails = () => {
       .then((data) => {
         setEmployee({ ...employee, ...data.data.updateEmployee });
         setIsEditing(false);
+      })
+      .catch((error) => {
+        console.error('Error updating employee:', error);
       });
   };
 
@@ -95,7 +101,7 @@ const EmployeeDetails = () => {
       },
       body: JSON.stringify({
         query: `
-          mutation DeleteEmployee($id: ID!) {
+          mutation deleteEmployee($id: ID!) {
             deleteEmployee(id: $id) {
               message
             }
@@ -108,22 +114,29 @@ const EmployeeDetails = () => {
       .then(() => {
         setShowDeleteModal(false);
         navigate('/'); // Redirect after deletion
+      })
+      .catch((error) => {
+        console.error('Error deleting employee:', error);
       });
   };
 
-  if (!employee) return (
-    <div className="text-center mt-5">
-      <div className="spinner-border" role="status">
-        <span className="visually-hidden">Loading...</span>
+  if (!employee) {
+    return (
+      <div className="text-center mt-5">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 
   return (
     <div className="container mt-5">
       <div className="card shadow-lg">
         <div className="card-header bg-primary text-white text-center">
-          <h3>{employee.firstName} {employee.lastName}</h3>
+          <h3>
+            {employee.FirstName} {employee.LastName}
+          </h3>
         </div>
         <div className="card-body">
           {isEditing ? (
@@ -132,9 +145,9 @@ const EmployeeDetails = () => {
                 <div className="col-md-6 mb-3">
                   <label>Title</label>
                   <select
-                    name="title"
+                    name="Title"
                     className="form-select"
-                    value={formData.title}
+                    value={formData.Title}
                     onChange={handleInputChange}
                   >
                     <option value="Employee">Employee</option>
@@ -146,9 +159,9 @@ const EmployeeDetails = () => {
                 <div className="col-md-6 mb-3">
                   <label>Department</label>
                   <select
-                    name="department"
+                    name="Department"
                     className="form-select"
-                    value={formData.department}
+                    value={formData.Department}
                     onChange={handleInputChange}
                   >
                     <option value="IT">IT</option>
@@ -162,9 +175,9 @@ const EmployeeDetails = () => {
                 <div className="col-md-6 mb-3">
                   <label>Status</label>
                   <select
-                    name="currentStatus"
+                    name="CurrentStatus"
                     className="form-select"
-                    value={formData.currentStatus.toString()}
+                    value={formData.CurrentStatus.toString()}
                     onChange={handleInputChange}
                   >
                     <option value="true">Working</option>
@@ -172,23 +185,49 @@ const EmployeeDetails = () => {
                   </select>
                 </div>
               </div>
-              <button type="button" className="btn btn-success me-2" onClick={handleSave}>
+              <button
+                type="button"
+                className="btn btn-success me-2"
+                onClick={handleSave}
+              >
                 Save
               </button>
-              <button type="button" className="btn btn-secondary" onClick={() => setIsEditing(false)}>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => setIsEditing(false)}
+              >
                 Cancel
               </button>
             </form>
           ) : (
             <div>
-              <p><strong>First Name:</strong> {employee.firstName}</p>
-              <p><strong>Last Name:</strong> {employee.lastName}</p>
-              <p><strong>Age:</strong> {employee.age}</p>
-              <p><strong>Date of Joining:</strong> {new Date(employee.dateOfJoining).toLocaleDateString()}</p>
-              <p><strong>Title:</strong> {employee.title}</p>
-              <p><strong>Department:</strong> {employee.department}</p>
-              <p><strong>Employee Type:</strong> {employee.employeeType}</p>
-              <p><strong>Status:</strong> {employee.currentStatus ? 'Working' : 'Retired'}</p>
+              <p>
+                <strong>First Name:</strong> {employee.FirstName}
+              </p>
+              <p>
+                <strong>Last Name:</strong> {employee.LastName}
+              </p>
+              <p>
+                <strong>Age:</strong> {employee.Age}
+              </p>
+              <p>
+                <strong>Date of Joining:</strong>{' '}
+                {new Date(employee.DateOfJoining).toLocaleDateString()}
+              </p>
+              <p>
+                <strong>Title:</strong> {employee.Title}
+              </p>
+              <p>
+                <strong>Department:</strong> {employee.Department}
+              </p>
+              <p>
+                <strong>Employee Type:</strong> {employee.EmployeeType}
+              </p>
+              <p>
+                <strong>Status:</strong>{' '}
+                {employee.CurrentStatus ? 'Working' : 'Retired'}
+              </p>
               <div className="d-flex justify-content-between">
                 <button className="btn btn-warning" onClick={handleEdit}>
                   Edit
@@ -204,7 +243,10 @@ const EmployeeDetails = () => {
           )}
         </div>
         <div className="card-footer text-center">
-          <button className="btn btn-secondary" onClick={() => navigate('/')}>
+          <button
+            className="btn btn-secondary"
+            onClick={() => navigate('/')}
+          >
             Back to Employee List
           </button>
         </div>

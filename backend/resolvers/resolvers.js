@@ -8,7 +8,7 @@ const resolvers = {
     // Fetches all employees from the database
     getEmployees: async (_, {type}) => {
       try {
-        const filter = type ? { employeeType: type } : {};
+        const filter = type ? { EmployeeType: type } : {};
         return await EmployeeModel.find(filter);
       } catch (error) {
         console.error("Error in fetching employees:", error);
@@ -33,7 +33,7 @@ const resolvers = {
       try {
         const newEmployee = new EmployeeModel({
           ...input,  
-          currentStatus: true,
+          CurrentStatus: true,
         });
         await newEmployee.save();
         return newEmployee;
@@ -46,9 +46,9 @@ const resolvers = {
     // new
     updateEmployee: async (_, { id, input }) => {
       const updates = {};
-      if (input.title) updates.title = input.title;
-      if (input.department) updates.department = input.department;
-      if (typeof input.currentStatus === 'boolean') updates.currentStatus = input.currentStatus;
+      if (input.Title) updates.Title = input.Title;
+      if (input.Department) updates.Department = input.Department;
+      if (typeof input.CurrentStatus === 'boolean') updates.CurrentStatus = input.CurrentStatus;
       return await EmployeeModel.findByIdAndUpdate(id, updates, { new: true });
     },
     deleteEmployee: async (_, { id }) => {

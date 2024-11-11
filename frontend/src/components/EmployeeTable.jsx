@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const EmployeeTable = ({ employees = [] }) => {
+const EmployeeTable = ({ getEmployees = [] }) => {
   return (
     <div className="table-container">
       <table>
@@ -19,14 +19,14 @@ const EmployeeTable = ({ employees = [] }) => {
           </tr>
         </thead>
         <tbody>
-          {employees.length === 0 ? (
+          {getEmployees.length === 0 ? (
             <tr>
               <td colSpan="9" className="no-data">
                 No employees found.
               </td>
             </tr>
           ) : (
-            employees.map((employee) => (
+            getEmployees.map((employee) => (
               <tr key={employee.id}>
                 <td>{employee.FirstName}</td>
                 <td>{employee.LastName}</td>
