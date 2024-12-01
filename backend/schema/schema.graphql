@@ -41,6 +41,14 @@ type Employee {
   Department: String!
   EmployeeType: String!
   CurrentStatus: Boolean!
+  retirementCountdown: RetirementCountdown # Added field for retirement countdown
+
+}
+
+  type RetirementCountdown {
+  years: Int!
+  months: Int!
+  days: Int!
 }
  
 # Query to retrieve all employees
@@ -48,4 +56,6 @@ type Query {
 #new
   getEmployees(type: String): [Employee]
   employee(id: ID!): Employee
+      upcomingRetirements(employeeType: String): [Employee!]! # Added query for upcoming retirements
+
 }
